@@ -1,0 +1,35 @@
+{
+  "name": "aeroportocrud",
+  "version": "1.0.0",
+  "description": "Node.js APIs com Express, Sequelize e PostgreSQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Grochowicz/AeroportoCRUD.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "sequeliza",
+    "postgresql",
+    "rest",
+    "api"
+  ],
+  "author": "Enzo A. R. e Eric G.",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Grochowicz/AeroportoCRUD/issues"
+  },
+  "homepage": "https://github.com/Grochowicz/AeroportoCRUD#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "pg": "^8.16.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
+  }
+}
