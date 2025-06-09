@@ -40,7 +40,7 @@ const ModelosList = () => {
   };
 
   const removeAllModelos = () => {
-    TutorialDataService.removeAll()
+    TutorialDataService.deleteAll()
       .then(response => {
         console.log(response.data);
         refreshList();
