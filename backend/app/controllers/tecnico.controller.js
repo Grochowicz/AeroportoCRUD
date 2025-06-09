@@ -1,47 +1,48 @@
 const db = require("../models");
-const Tabela = db.avioes;
+const Tabela = db.tecnicos;
 const Op = db.Sequelize.Op;
 
-// Cria avião 
+// Cria tecnico 
 exports.create = (req, res) => {
   // Valida request
-  if (!req.body.modeloId) {
+  if (!req.body.empregadoId) {
     res.status(400).send({
       message: "Conteúdo vazio!"
     });
     return;
   }
 
-  const aviao = {
-    modeloId: req.body.modeloId
+  const tecnico = {
+    empregadoId: req.body.empregadoId,
+    salario_base: req.body.salario_base
   };
 
   // Salva no BD
-  Tabela.create(aviao)
+  Tabela.create(tecnico)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Erro criando avião."
+          err.message || "Erro criando técnico."
       });
     });
 };
 
 // Select todos
 exports.findAll = (req, res) => {
-  // const nome = req.query.nome;
+  // const empregadoId = req.query.empregadoId;
   // var condition = nome ? { nome: { [Op.iLike]: `%${nome}%` } } : null;
 
-  Tabela.findAll({ where: null})
+  Tabela.findAll({ where: null })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Erro recuperando aviões."
+          err.message || "Erro recuperando técnicos."
       });
     });
 };
@@ -56,18 +57,18 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Não encontrado avião com id=${id}.`
+          message: `Não encontrado técnico com id=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Erro recuperando avião com id=" + id
+        message: "Erro recuperando técnico com id=" + id
       });
     });
 };
 
-// Atualiza avião por id
+// Atualiza técnico por id
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -77,22 +78,22 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Avião atualizado com sucesso."
+          message: "Técnico atualizado com sucesso."
         });
       } else {
         res.send({
-          message: `Não foi possível atualizar avião com id=${id}. Pode não ter sido encontrado ou req.body está vazio!`
+          message: `Não foi possível atualizar técnico com id=${id}. Pode não ter sido encontrado ou req.body está vazio!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Erro atualizando avião com id=" + id
+        message: "Erro atualizando técnico com id=" + id
       });
     });
 };
 
-// Deleta avião por id
+// Deleta modelo por id
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -102,34 +103,34 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Avião deletado com sucesso!"
+          message: "Técnico deletado com sucesso!"
         });
       } else {
         res.send({
-          message: `Não foi possível deletar avião com id=${id}. Pode não ter sido encontrado!`
+          message: `Não foi possível deletar técnico com id=${id}. Pode não ter sido encontrado!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Erro deletando avião com id=" + id
+        message: "Erro deletando técnico com id=" + id
       });
     });
 };
 
-// Deleta todos os aviões 
+// Deleta todos os modelos
 exports.deleteAll = (req, res) => {
   Tabela.destroy({
     where: {},
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} aviões deletados com sucesso!` });
+      res.send({ message: `${nums} técnicos deletados com sucesso!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Erro removendo todos os aviões."
+          err.message || "Erro removendo todos os técnicos."
       });
     });
 };

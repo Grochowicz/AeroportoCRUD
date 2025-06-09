@@ -21,8 +21,10 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello World" });
 });
 
-require("./app/routes/modelo.routes")(app);
 require("./app/routes/empregado.routes")(app);
+require("./app/routes/tecnico.routes")(app);
+
+require("./app/routes/modelo.routes")(app);
 require("./app/routes/aviao.routes")(app);
 
 // set port, listen for requests

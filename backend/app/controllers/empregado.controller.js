@@ -32,7 +32,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Select todos
+// Select todos por nome
 exports.findAll = (req, res) => {
   const nome = req.query.nome;
   var condition = nome ? { nome: { [Op.iLike]: `%${nome}%` } } : null;
