@@ -1,39 +1,42 @@
 const db = require("../models");
-const Tabela = db.modelos;
+const Tabela = db.testes;
 const Op = db.Sequelize.Op;
 
-// Cria modelo
+// Cria teste 
 exports.create = (req, res) => {
   // Valida request
-  if (!req.body.nome) {
+  if (!req.body.num_anac) {
     res.status(400).send({
       message: "Conteúdo vazio!"
     });
     return;
   }
 
-  const modelo = {
-    nome: req.body.nome,
-    capacidade: req.body.capacidade,
-    peso: req.body.peso
+  const teste = {
+    num_anac: req.body.num_anac,
+    data: req.body.data,
+    duracao_horas: req.body.duracao_horas,
+    resultado: req.body.resultado,
+    aviaoId: req.body.aviaoId,
+    tecnicoId: req.body.tecnicoId
   };
 
   // Salva no BD
-  Tabela.create(modelo)
+  Tabela.create(teste)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Erro criando Modelo."
+          err.message || "Erro criando teste."
       });
     });
 };
 
-// Select todos por nome
+// Select todos por num_anac
 exports.findAll = (req, res) => {
-  const nome = req.query.nome;
+  const nome = req.query.num_anac;
   var condition = nome ? { nome: { [Op.iLike]: `%${nome}%` } } : null;
 
   Tabela.findAll({ where: condition })
@@ -43,7 +46,7 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Erro recuperando modelos."
+          err.message || "Erro recuperando testes."
       });
     });
 };
@@ -58,18 +61,18 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Não encontrado modelo com id=${id}.`
+          message: `Não encontrado teste com id=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Erro recuperando modelo com id=" + id
+        message: "Erro recuperando teste com id=" + id
       });
     });
 };
 
-// Atualiza modelo por id
+// Atualiza teste por id
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -79,17 +82,17 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Modelo atualizado com sucesso."
+          message: "teste atualizado com sucesso."
         });
       } else {
         res.send({
-          message: `Não foi possível atualizar modelo com id=${id}. Pode não ter sido encontrado ou req.body está vazio!`
+          message: `Não foi possível atualizar teste com id=${id}. Pode não ter sido encontrado ou req.body está vazio!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Erro atualizando modelo com id=" + id
+        message: "Erro atualizando teste com id=" + id
       });
     });
 };
@@ -104,17 +107,17 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Modelo deletado com sucesso!"
+          message: "teste deletado com sucesso!"
         });
       } else {
         res.send({
-          message: `Não foi possível deletar modelo com id=${id}. Pode não ter sido encontrado!`
+          message: `Não foi possível deletar teste com id=${id}. Pode não ter sido encontrado!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Erro deletando modelo com id=" + id
+        message: "Erro deletando teste com id=" + id
       });
     });
 };
@@ -126,12 +129,12 @@ exports.deleteAll = (req, res) => {
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} modelos deletados com sucesso!` });
+      res.send({ message: `${nums} testes deletados com sucesso!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Erro removendo todos os modelos."
+          err.message || "Erro removendo todos os testes."
       });
     });
 };
