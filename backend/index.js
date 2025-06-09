@@ -30,6 +30,8 @@ require("./app/routes/aviao.routes")(app);
 
 require("./app/routes/teste.routes")(app);
 
+require("./app/routes/perito_em.routes")(app);
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

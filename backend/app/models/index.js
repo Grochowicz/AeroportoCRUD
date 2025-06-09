@@ -41,10 +41,20 @@ db.avioes.belongsTo(db.modelos, {
 });
 
 db.testes = require("./teste.model.js")(sequelize, Sequelize);
+//testes
 db.avioes.hasMany(db.testes,  { foreignKey: "aviaoId",   as: "testes" });
 db.testes.belongsTo(db.avioes, { foreignKey: "aviaoId",   as: "aviao"  });
 
 db.tecnicos.hasMany(db.testes,  { foreignKey: "tecnicoId", as: "testes" });
-db.testes.belongsTo(db.tecnicos,{ foreignKey: "tecnicoId", as: "tecnico" });
+db.testes.belongsTo(db.tecnicos, { foreignKey: "tecnicoId", as: "tecnico" });
+
+db.perito_em = require("./perito_em.model.js")(sequelize, Sequelize);
+
+//perito em
+db.modelos.hasMany(db.perito_em,  { foreignKey: "modeloId",   as: "peritos" });
+db.perito_em.belongsTo(db.modelos, { foreignKey: "modeloId",   as: "modelo"  });
+
+db.tecnicos.hasMany(db.perito_em,  { foreignKey: "tecnicoId", as: "perícias" });
+db.perito_em.belongsTo(db.tecnicos, { foreignKey: "tecnicoId", as: "tecnico" });
 
 module.exports = db;
