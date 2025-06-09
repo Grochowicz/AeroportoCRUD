@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
-import TutorialDataService from "../services/ModeloService";
+import EmpregadoDataService from "../services/EmpregadoService";
 import { Link } from "react-router-dom";
 
-const ModelosList = () => {
-  const [modelos, setModelos] = useState([]);
-  const [currentModelo, setCurrentModelo] = useState(null);
+const EmpregadosList = () => {
+  const [empregados, setEmpregados] = useState([]);
+  const [currentEmpregado, setCurrentEmpregado] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
-  const [searchTitle, setSearchTitle] = useState("");
+  const [searchNome, setSearchNome] = useState("");
 
   useEffect(() => {
-    retrieveModelos();
+    retrieveEmpregados();
   }, []);
 
-  const onChangeSearchTitle = e => {
-    const searchTitle = e.target.value;
-    setSearchTitle(searchTitle);
+  const onChangeSearchNome = e => {
+    const searchNome = e.target.value;
+    setSearchNome(searchNome);
   };
 
-  const retrieveModelos= () => {
-    TutorialDataService.getAll()
+  const retrieveEmpregados = () => {
+    EmpregadoDataService.getAll()
       .then(response => {
-        setModelos(response.data);
+        setEmpregados(response.data);
         console.log(response.data);
       })
       .catch(e => {
@@ -29,18 +29,18 @@ const ModelosList = () => {
   };
 
   const refreshList = () => {
-    retrieveModelos();
-    setCurrentModelo(null);
+    retrieveEmpregados();
+    setCurrentEmpregado(null);
     setCurrentIndex(-1);
   };
 
-  const setActiveModelo = (tutorial, index) => {
-    setCurrentModelo(tutorial);
+  const setActiveEmpregado = (empregado, index) => {
+    setCurrentEmpregado(empregado);
     setCurrentIndex(index);
   };
 
-  const removeAllModelos = () => {
-    TutorialDataService.deleteAll()
+  const removeAllEmpregados = () => {
+    EmpregadoDataService.deleteAll()
       .then(response => {
         console.log(response.data);
         refreshList();
@@ -50,10 +50,10 @@ const ModelosList = () => {
       });
   };
 
-  const findByTitle = () => {
-    TutorialDataService.findByTitle(searchTitle)
+  const findByNome = () => {
+    EmpregadoDataService.findByNome(searchNome)
       .then(response => {
-        setModelos(response.data);
+        setEmpregados(response.data);
         console.log(response.data);
       })
       .catch(e => {
@@ -69,78 +69,82 @@ const ModelosList = () => {
             type="text"
             className="form-control"
             placeholder="Buscar por nome"
-            value={searchTitle}
-            onChange={onChangeSearchTitle}
+            value={searchNome}
+            onChange={onChangeSearchNome}
           />
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"
               type="button"
-              onClick={findByTitle}
+              onClick={findByNome}
             >
-              Buscar 
+              Buscar
             </button>
           </div>
         </div>
       </div>
       <div className="col-md-6">
-        <h4>Lista de Modelos</h4>
+        <h4>Lista de Empregados</h4>
 
         <ul className="list-group">
-          {modelos &&
-            modelos.map((modelo, index) => (
+          {empregados &&
+            empregados.map((empregado, index) => (
               <li
                 className={
                   "list-group-item " + (index === currentIndex ? "active" : "")
                 }
-                onClick={() => setActiveModelo(modelo, index)}
+                onClick={() => setActiveEmpregado(empregado, index)}
                 key={index}
               >
-                {modelo.nome}
+                {empregado.nome}
               </li>
             ))}
         </ul>
 
         <button
           className="m-3 btn btn-sm btn-danger"
-          onClick={removeAllModelos}
+          onClick={removeAllEmpregados}
         >
           Remover Todos
         </button>
       </div>
       <div className="col-md-6">
-        {currentModelo ? (
+        {currentEmpregado ? (
           <div>
-            <h4>Modelo</h4>
+            <h4>Empregado</h4>
             <div>
               <label>
                 <strong>Nome:</strong>
               </label>{" "}
-              {currentModelo.nome}
+              {currentEmpregado.nome}
             </div>
             <div>
               <label>
-                <strong>Capacidade:</strong>
+                <strong>Endereço:</strong>
               </label>{" "}
-              {currentModelo.capacidade}
+              {currentEmpregado.endereco}
             </div>
             <div>
               <label>
-                <strong>Peso:</strong>
+                <strong>Telefone:</strong>
               </label>{" "}
-              {currentModelo.peso}
+              {currentEmpregado.telefone}
+            </div>
+            <div>
+              <label>
+                <strong>Salário:</strong>
+              </label>{" "}
+              R$ {parseFloat(currentEmpregado.salario).toFixed(2)}
             </div>
 
-            <Link
-              to={"/modelos/" + currentModelo.id}
-            >
+            <Link to={"/empregados/" + currentEmpregado.id}>
               Editar
             </Link>
           </div>
         ) : (
           <div>
             <br />
-            <p>Clique em um modelo</p>
+            <p>Clique em um empregado</p>
           </div>
         )}
       </div>
@@ -148,4 +152,4 @@ const ModelosList = () => {
   );
 };
 
-export default ModelosList; 
+export default EmpregadosList;

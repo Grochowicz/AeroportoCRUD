@@ -96,7 +96,7 @@ const AddModelo = () => {
           </div>
 
           <button onClick={saveModelo} className="btn btn-success">
-            Submit
+            Salvar 
           </button>
         </div>
       )}

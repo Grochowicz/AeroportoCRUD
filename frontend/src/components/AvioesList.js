@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
-import TutorialDataService from "../services/ModeloService";
+import AviaoDataService from "../services/AviaoService";
 import { Link } from "react-router-dom";
 
-const ModelosList = () => {
-  const [modelos, setModelos] = useState([]);
-  const [currentModelo, setCurrentModelo] = useState(null);
+const AvioesList = () => {
+  const [avioes, setAvioes] = useState([]);
+  const [currentAviao, setCurrentAviao] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
-  const [searchTitle, setSearchTitle] = useState("");
+  const [searchId, setSearchId] = useState("");
 
   useEffect(() => {
-    retrieveModelos();
+    retrieveAvioes();
   }, []);
 
-  const onChangeSearchTitle = e => {
-    const searchTitle = e.target.value;
-    setSearchTitle(searchTitle);
+  const onChangeSearchId = e => {
+    const searchId = e.target.value;
+    setSearchId(searchId);
   };
 
-  const retrieveModelos= () => {
-    TutorialDataService.getAll()
+  const retrieveAvioes = () => {
+    AviaoDataService.getAll()
       .then(response => {
-        setModelos(response.data);
+        setAvioes(response.data);
         console.log(response.data);
       })
       .catch(e => {
@@ -29,18 +29,18 @@ const ModelosList = () => {
   };
 
   const refreshList = () => {
-    retrieveModelos();
-    setCurrentModelo(null);
+    retrieveAvioes();
+    setCurrentAviao(null);
     setCurrentIndex(-1);
   };
 
-  const setActiveModelo = (tutorial, index) => {
-    setCurrentModelo(tutorial);
+  const setActiveAviao = (aviao, index) => {
+    setCurrentAviao(aviao);
     setCurrentIndex(index);
   };
 
-  const removeAllModelos = () => {
-    TutorialDataService.deleteAll()
+  const removeAllAvioes = () => {
+    AviaoDataService.deleteAll()
       .then(response => {
         console.log(response.data);
         refreshList();
@@ -50,10 +50,10 @@ const ModelosList = () => {
       });
   };
 
-  const findByTitle = () => {
-    TutorialDataService.findByTitle(searchTitle)
+  const findById = () => {
+    AviaoDataService.findById(searchId)
       .then(response => {
-        setModelos(response.data);
+        setAvioes(response.data);
         console.log(response.data);
       })
       .catch(e => {
@@ -68,79 +68,71 @@ const ModelosList = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Buscar por nome"
-            value={searchTitle}
-            onChange={onChangeSearchTitle}
+            placeholder="Buscar por ID"
+            value={searchId}
+            onChange={onChangeSearchId}
           />
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"
               type="button"
-              onClick={findByTitle}
+              onClick={findById}
             >
-              Buscar 
+              Buscar
             </button>
           </div>
         </div>
       </div>
       <div className="col-md-6">
-        <h4>Lista de Modelos</h4>
+        <h4>Lista de Aviões</h4>
 
         <ul className="list-group">
-          {modelos &&
-            modelos.map((modelo, index) => (
+          {avioes &&
+            avioes.map((aviao, index) => (
               <li
                 className={
                   "list-group-item " + (index === currentIndex ? "active" : "")
                 }
-                onClick={() => setActiveModelo(modelo, index)}
+                onClick={() => setActiveAviao(aviao, index)}
                 key={index}
               >
-                {modelo.nome}
+                Avião #{aviao.id} (Modelo {aviao.modeloId})
               </li>
             ))}
         </ul>
 
         <button
           className="m-3 btn btn-sm btn-danger"
-          onClick={removeAllModelos}
+          onClick={removeAllAvioes}
         >
           Remover Todos
         </button>
       </div>
       <div className="col-md-6">
-        {currentModelo ? (
+        {currentAviao ? (
           <div>
-            <h4>Modelo</h4>
+            <h4>Detalhes</h4>
             <div>
               <label>
-                <strong>Nome:</strong>
+                <strong>ID:</strong>
               </label>{" "}
-              {currentModelo.nome}
+              {currentAviao.id}
             </div>
             <div>
               <label>
-                <strong>Capacidade:</strong>
+                <strong>Modelo ID:</strong>
               </label>{" "}
-              {currentModelo.capacidade}
-            </div>
-            <div>
-              <label>
-                <strong>Peso:</strong>
-              </label>{" "}
-              {currentModelo.peso}
+              {currentAviao.modeloId}
             </div>
 
-            <Link
-              to={"/modelos/" + currentModelo.id}
-            >
+            <Link to={"/avioes/" + currentAviao.id}>
               Editar
             </Link>
           </div>
         ) : (
           <div>
             <br />
-            <p>Clique em um modelo</p>
+            <p>Clique em um avião</p>
           </div>
         )}
       </div>
@@ -148,4 +140,4 @@ const ModelosList = () => {
   );
 };
 
-export default ModelosList; 
+export default AvioesList;

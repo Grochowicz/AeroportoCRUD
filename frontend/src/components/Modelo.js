@@ -120,7 +120,7 @@ const Modelo = props => {
       ) : (
         <div>
           <br />
-          <p>Por favor, clique em um modelo...</p>
+          <p>Clique em um modelo</p>
         </div>
       )}
     </div>
