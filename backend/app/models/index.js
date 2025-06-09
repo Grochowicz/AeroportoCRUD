@@ -16,9 +16,17 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.empregados = require("./empregado.model.js")(sequelize, Sequelize);
+
 db.tecnicos = require("./tecnico.model.js")(sequelize, Sequelize);
 db.empregados.hasMany(db.tecnicos, { as: "tecnicos" });
 db.tecnicos.belongsTo(db.empregados, {
+  foreignKey: "empregadoId",
+  as: "empregado"
+});
+
+db.controladores = require("./controlador.model.js")(sequelize, Sequelize);
+db.empregados.hasMany(db.controladores, { as: "controladores" });
+db.controladores.belongsTo(db.empregados, {
   foreignKey: "empregadoId",
   as: "empregado"
 });
