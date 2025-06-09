@@ -4,9 +4,9 @@ import { Routes, Route, Link } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css';
 
-import AddTutorial from "./components/AddTutorial";
+import AddModelo from './components/AddModelo';
 import Tutorial from "./components/Tutorial";
-import TutorialsList from "./components/TutorialsList";
+import ModelosList from './components/ModelosList';
 
 function App() {
   return (
@@ -18,12 +18,12 @@ function App() {
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
               <Link to={"/tutorials"} className="nav-link">
-                Tutorials
+                Modelos
               </Link>
             </li>
             <li className="nav-item">
               <Link to={"/add"} className="nav-link">
-                Add
+                Adicionar Modelo
               </Link>
             </li>
           </div>
@@ -31,9 +31,9 @@ function App() {
 
         <div className="container mt-3">
           <Routes>
-            <Route path="/" element={<TutorialsList/>} />
-            <Route path="/tutorials" element={<TutorialsList/>} />
-            <Route path="/add" element={<AddTutorial/>} />
+            <Route path="/" element={<ModelosList/>} />
+            <Route path="/tutorials" element={<ModelosList/>} />
+            <Route path="/add" element={<AddModelo/>} />
             <Route path="/tutorials/:id" element={<Tutorial/>} />
           </Routes>
         </div>

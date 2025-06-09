@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import TutorialDataService from "../services/TutorialService";
+import TutorialDataService from "../services/ModeloService";
 import { Link } from "react-router-dom";
 
-const TutorialsList = () => {
-  const [tutorials, setTutorials] = useState([]);
-  const [currentTutorial, setCurrentTutorial] = useState(null);
+const ModelosList = () => {
+  const [modelos, setModelos] = useState([]);
+  const [currentModelo, setCurrentModelo] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [searchTitle, setSearchTitle] = useState("");
 
   useEffect(() => {
-    retrieveTutorials();
+    retrieveModelos();
   }, []);
 
   const onChangeSearchTitle = e => {
@@ -17,10 +17,10 @@ const TutorialsList = () => {
     setSearchTitle(searchTitle);
   };
 
-  const retrieveTutorials = () => {
+  const retrieveModelos= () => {
     TutorialDataService.getAll()
       .then(response => {
-        setTutorials(response.data);
+        setModelos(response.data);
         console.log(response.data);
       })
       .catch(e => {
@@ -29,17 +29,17 @@ const TutorialsList = () => {
   };
 
   const refreshList = () => {
-    retrieveTutorials();
-    setCurrentTutorial(null);
+    retrieveModelos();
+    setCurrentModelo(null);
     setCurrentIndex(-1);
   };
 
-  const setActiveTutorial = (tutorial, index) => {
-    setCurrentTutorial(tutorial);
+  const setActiveModelo = (tutorial, index) => {
+    setCurrentModelo(tutorial);
     setCurrentIndex(index);
   };
 
-  const removeAllTutorials = () => {
+  const removeAllModelos = () => {
     TutorialDataService.removeAll()
       .then(response => {
         console.log(response.data);
@@ -53,7 +53,7 @@ const TutorialsList = () => {
   const findByTitle = () => {
     TutorialDataService.findByTitle(searchTitle)
       .then(response => {
-        setTutorials(response.data);
+        setModelos(response.data);
         console.log(response.data);
       })
       .catch(e => {
@@ -84,64 +84,63 @@ const TutorialsList = () => {
         </div>
       </div>
       <div className="col-md-6">
-        <h4>Tutorials List</h4>
+        <h4>Lista de Modelos</h4>
 
         <ul className="list-group">
-          {tutorials &&
-            tutorials.map((tutorial, index) => (
+          {modelos &&
+            modelos.map((modelo, index) => (
               <li
                 className={
                   "list-group-item " + (index === currentIndex ? "active" : "")
                 }
-                onClick={() => setActiveTutorial(tutorial, index)}
+                onClick={() => setActiveModelo(modelo, index)}
                 key={index}
               >
-                {tutorial.title}
+                {modelo.nome}
               </li>
             ))}
         </ul>
 
         <button
           className="m-3 btn btn-sm btn-danger"
-          onClick={removeAllTutorials}
+          onClick={removeAllModelos}
         >
-          Remove All
+          Remover Todos
         </button>
       </div>
       <div className="col-md-6">
-        {currentTutorial ? (
+        {currentModelo ? (
           <div>
-            <h4>Tutorial</h4>
+            <h4>Modelo</h4>
             <div>
               <label>
-                <strong>Title:</strong>
+                <strong>Nome:</strong>
               </label>{" "}
-              {currentTutorial.title}
+              {currentModelo.nome}
             </div>
             <div>
               <label>
-                <strong>Description:</strong>
+                <strong>Capacidade:</strong>
               </label>{" "}
-              {currentTutorial.description}
+              {currentModelo.capacidade}
             </div>
             <div>
               <label>
-                <strong>Status:</strong>
+                <strong>Peso:</strong>
               </label>{" "}
-              {currentTutorial.published ? "Published" : "Pending"}
+              {currentModelo.peso}
             </div>
 
             <Link
-              to={"/tutorials/" + currentTutorial.id}
-              className="badge badge-warning"
+              to={"/modelos/" + currentModelo.id}
             >
-              Edit
+              Editar
             </Link>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a Tutorial...</p>
+            <p>Por favor, clique em um tutorial...</p>
           </div>
         )}
       </div>
@@ -149,4 +148,4 @@ const TutorialsList = () => {
   );
 };
 
-export default TutorialsList;
+export default ModelosList; 
