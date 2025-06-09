@@ -1,5 +1,11 @@
 module.exports = (sequelize, Sequelize) =>{
-	const Modelo = sequelize.define("modelo", {
+	// CREATE TABLE Modelo_de_aviao (
+	// 	cod_modelo SERIAL PRIMARY KEY,
+	// 	nome TEXT,
+	// 	capacidade INTEGER,
+	// 	peso NUMERIC(10,2)
+	// );
+	const Tabela = sequelize.define("modelo", {
 		nome: {
 			type: Sequelize.TEXT
 		},
@@ -11,5 +17,5 @@ module.exports = (sequelize, Sequelize) =>{
 		}
 	});
 
-	return Modelo;
+	return Tabela;
 };

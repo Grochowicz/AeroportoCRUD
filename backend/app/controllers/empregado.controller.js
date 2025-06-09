@@ -1,8 +1,8 @@
 const db = require("../models");
-const Tabela = db.modelos;
+const Tabela = db.empregados;
 const Op = db.Sequelize.Op;
 
-// Cria modelo
+// Cria empregado 
 exports.create = (req, res) => {
   // Valida request
   if (!req.body.nome) {
@@ -14,8 +14,9 @@ exports.create = (req, res) => {
 
   const modelo = {
     nome: req.body.nome,
-	capacidade: req.body.capacidade,
-	peso: req.body.peso
+    endereco: req.body.endereco,
+    telefone: req.body.telefone,
+    salario: req.body.salario
   };
 
   // Salva no BD
@@ -26,7 +27,7 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Erro criando Modelo."
+          err.message || "Erro criando empregado."
       });
     });
 };
@@ -43,7 +44,7 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Erro recuperando modelos."
+          err.message || "Erro recuperando empregados."
       });
     });
 };
@@ -58,18 +59,18 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Não encontrado modelo com id=${id}.`
+          message: `Não encontrado empregado com id=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Erro recuperando modelo com id=" + id
+        message: "Erro recuperando empregado com id=" + id
       });
     });
 };
 
-// Atualiza modelo por id
+// Atualiza empregado por id
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -79,17 +80,17 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Modelo atualizado com sucesso."
+          message: "Empregado atualizado com sucesso."
         });
       } else {
         res.send({
-          message: `Não foi possível atualizar modelo com id=${id}. Pode não ter sido encontrado ou req.body está vazio!`
+          message: `Não foi possível atualizar empregado com id=${id}. Pode não ter sido encontrado ou req.body está vazio!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Erro atualizando modelo com id=" + id
+        message: "Erro atualizando empregado com id=" + id
       });
     });
 };
@@ -104,17 +105,17 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Modelo deletado com sucesso!"
+          message: "Empregado deletado com sucesso!"
         });
       } else {
         res.send({
-          message: `Não foi possível deletar modelo com id=${id}. Pode não ter sido encontrado!`
+          message: `Não foi possível deletar empregado com id=${id}. Pode não ter sido encontrado!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Erro deletando modelo com id=" + id
+        message: "Erro deletando empregado com id=" + id
       });
     });
 };
@@ -126,12 +127,12 @@ exports.deleteAll = (req, res) => {
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} modelos deletados com sucesso!` });
+      res.send({ message: `${nums} empregados deletados com sucesso!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Erro removendo todos os modelos."
+          err.message || "Erro removendo todos os empregados."
       });
     });
 };
