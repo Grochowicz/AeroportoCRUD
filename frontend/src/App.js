@@ -19,12 +19,16 @@ import AddTeste from "./components/AddTeste";
 import Teste from "./components/Teste";
 import TestesList from "./components/TestesList";
 
+import AddPeritoEm from "./components/AddPeritoEm";
+import PeritoEm from "./components/PeritoEm";
+import PeritoEmList from "./components/PeritoEmList";
+
 function App() {
   return (
       <div>
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <nav className="navbar navbar-expand navbar-dark bg-primary">
           <a href="/modelos" className="navbar-brand">
-            AeroManage
+            <b>AeroManage</b>
           </a>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
@@ -33,18 +37,8 @@ function App() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={"/addModelo"} className="nav-link">
-                Adicionar Modelo
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link to={"/avioes"} className="nav-link">
                 Aviões
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/addAviao"} className="nav-link">
-                Adicionar Avião
               </Link>
             </li>
             <li className="nav-item">
@@ -53,18 +47,8 @@ function App() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={"/addEmpregado"} className="nav-link">
-                Adicionar Empregado
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link to={"/testes"} className="nav-link">
                 Testes
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/addTeste"} className="nav-link">
-                Adicionar Teste
               </Link>
             </li>
             <li className="nav-item">
@@ -72,12 +56,6 @@ function App() {
                 Perito em
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to={"/addPerito_em"} className="nav-link">
-                Adicionar Perito em
-              </Link>
-            </li>
-
           </div>
         </nav>
 
@@ -99,6 +77,10 @@ function App() {
             <Route path="/testes" element={<TestesList/>} />
             <Route path="/addTeste" element={<AddTeste/>} />
             <Route path="/testes/:id" element={<Teste/>} />
+
+            <Route path="/perito_em" element={<PeritoEmList/>} />
+            <Route path="/addPerito_em" element={<AddPeritoEm/>} />
+            <Route path="/perito_em/:id" element={<PeritoEm/>} />
           </Routes>
         </div>
       </div>

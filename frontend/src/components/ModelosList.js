@@ -144,6 +144,26 @@ const ModelosList = () => {
           </div>
         )}
       </div>
+
+      <Link to="/addModelo" className="btn btn-primary"
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "24px",
+          zIndex: 999
+        }}
+        title="Adicionar Modelo"
+      >
+        +
+      </Link>
+
     </div>
   );
 };

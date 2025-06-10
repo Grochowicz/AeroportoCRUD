@@ -7,6 +7,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.navbar {
+  font-family: 'Montserrat', sans-serif;
+  height: 5rem;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.navbar-brand {
+  padding: 1rem;
+}
+
+.bg-primary {
+  background-color: #004c99;
+}
+
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

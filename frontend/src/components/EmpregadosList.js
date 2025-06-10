@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import EmpregadoDataService from "../services/EmpregadoService";
 import { Link } from "react-router-dom";
 
+
 const EmpregadosList = () => {
   const [empregados, setEmpregados] = useState([]);
   const [currentEmpregado, setCurrentEmpregado] = useState(null);
@@ -148,6 +149,25 @@ const EmpregadosList = () => {
           </div>
         )}
       </div>
+      <Link to="/addEmpregado" className="btn btn-primary"
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "24px",
+          zIndex: 999
+        }}
+        title="Adicionar Empregado"
+      >
+        +
+      </Link>
+
     </div>
   );
 };
