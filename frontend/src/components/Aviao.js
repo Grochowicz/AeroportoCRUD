@@ -58,7 +58,7 @@ const Aviao = () => {
   return (
     <div>
       {currentAviao ? (
-        <div className="edit-form">
+        <div className="edit-form container mt-3">
           <h4>Avião</h4>
           <form>
             <div className="form-group">

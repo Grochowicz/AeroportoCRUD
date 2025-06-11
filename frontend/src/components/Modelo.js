@@ -61,7 +61,7 @@ const Modelo = props => {
     return (
     <div>
       {currentModelo? (
-        <div className="edit-form">
+        <div className="edit-form container mt-3">
           <h4>Modelo</h4>
             <form>
               <div className="form-group">

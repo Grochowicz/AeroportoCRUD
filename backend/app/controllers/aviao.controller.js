@@ -31,10 +31,10 @@ exports.create = (req, res) => {
 
 // Select todos
 exports.findAll = (req, res) => {
-  // const nome = req.query.nome;
-  // var condition = nome ? { nome: { [Op.iLike]: `%${nome}%` } } : null;
+  const modeloId = req.query.modeloId;
+  var condition = modeloId? { modeloId: { [Op.eq]: parseInt(modeloId) } } : null;
 
-  Tabela.findAll({ where: null})
+  Tabela.findAll({ where: condition})
     .then(data => {
       res.send(data);
     })
@@ -46,7 +46,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Acha um modelo por id
+// Acha um avião por id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 

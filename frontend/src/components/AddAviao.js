@@ -39,7 +39,7 @@ const AddAviao = () => {
   };
 
   return (
-    <div className="submit-form">
+    <div className="submit-form container mt-3">
       {submitted ? (
         <div>
           <h4>Você adicionou o avião com sucesso!</h4>

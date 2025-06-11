@@ -37,7 +37,7 @@ const PeritoEmList = () => {
   };
 
   return (
-    <div className="list row">
+    <div className="list row container mt-3">
       <div className="col-md-6">
         <h4>Relacionamentos perito_em</h4>
         <ul className="list-group">

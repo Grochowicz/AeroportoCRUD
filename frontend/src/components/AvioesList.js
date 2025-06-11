@@ -51,7 +51,7 @@ const AvioesList = () => {
   };
 
   const findById = () => {
-    AviaoDataService.findById(searchId)
+    AviaoDataService.findByModelo(searchId)
       .then(response => {
         setAvioes(response.data);
         console.log(response.data);
@@ -62,13 +62,13 @@ const AvioesList = () => {
   };
 
   return (
-    <div className="list row">
+    <div className="list row container mt-3">
       <div className="col-md-8">
         <div className="input-group mb-3">
           <input
             type="text"
             className="form-control"
-            placeholder="Buscar por ID"
+            placeholder="Buscar por modelo"
             value={searchId}
             onChange={onChangeSearchId}
           />
@@ -137,7 +137,7 @@ const AvioesList = () => {
         )}
       </div>
 
-      <Link to="/addAviao" className="btn btn-primary"
+      <Link to="/addAviao" className="btn btn-primary btn-add"
         style={{
           position: "fixed",
           bottom: "20px",

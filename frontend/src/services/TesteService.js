@@ -1,6 +1,6 @@
 import http from "../http-common";
 
-class ModeloDataService {
+class TesteDataService{
   getAll() {
     return http.get("/testes");
   }
@@ -25,9 +25,9 @@ class ModeloDataService {
     return http.delete(`/testes`);
   }
 
-  // findByTitle(title) {
-    // return http.get(`/testes?nome=${title}`);
-  // }
+  findByNumAnac(num) {
+     return http.get(`/testes?num_anac=${num}`);
+  }
 }
 
-export default new ModeloDataService();
+export default new TesteDataService();

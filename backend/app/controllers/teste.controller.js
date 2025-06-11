@@ -37,7 +37,7 @@ exports.create = (req, res) => {
 // Select todos por num_anac
 exports.findAll = (req, res) => {
   const nome = req.query.num_anac;
-  var condition = nome ? { nome: { [Op.iLike]: `%${nome}%` } } : null;
+  var condition = nome ? { num_anac: { [Op.eq]: parseInt(nome) } } : null;
 
   Tabela.findAll({ where: condition })
     .then(data => {

@@ -13,6 +13,14 @@ class EmpregadoDataService {
     return http.post("/empregados", data);
   }
 
+  createControlador(data) {
+    return http.post("/controladores", data);
+  }
+
+  createTecnico(data) {
+    return http.post("/tecnicos", data);
+  }
+
   update(id, data) {
     return http.put(`/empregados/${id}`, data);
   }

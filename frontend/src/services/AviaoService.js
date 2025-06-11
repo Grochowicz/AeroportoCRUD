@@ -11,7 +11,7 @@ class AviaoDataService {
 
   create(data) {
     return http.post("/avioes", data);
-    }
+  }
 
   update(id, data) {
     return http.put(`/avioes/${id}`, data);

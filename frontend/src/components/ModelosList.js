@@ -62,7 +62,7 @@ const ModelosList = () => {
   };
 
   return (
-    <div className="list row">
+    <div className="list row container mt-3">
       <div className="col-md-8">
         <div className="input-group mb-3">
           <input
@@ -112,6 +112,12 @@ const ModelosList = () => {
         {currentModelo ? (
           <div>
             <h4>Modelo</h4>
+            <div>
+              <label>
+                <strong>ID:</strong>
+              </label>{" "}
+              {currentModelo.id}
+            </div>
             <div>
               <label>
                 <strong>Nome:</strong>

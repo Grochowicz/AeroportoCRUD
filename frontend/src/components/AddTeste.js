@@ -36,7 +36,7 @@ const AddTeste = () => {
   };
 
   return (
-    <div className="submit-form">
+    <div className="submit-form container mt-3">
       {submitted ? (
         <div>
           <h4>Teste enviado com sucesso!</h4>

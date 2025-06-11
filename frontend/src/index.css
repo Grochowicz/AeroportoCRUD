@@ -7,8 +7,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.fix-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
 .navbar {
-  font-family: 'Montserrat', sans-serif;
+ font-family: 'Montserrat', sans-serif;
   height: 5rem;
   padding: 2rem;
   font-size: 1.2rem;
@@ -22,8 +29,17 @@ body {
   background-color: #004c99;
 }
 
+.landing-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 5rem;
+}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.landing-container {
+  background-image: url("/public/plane.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
 }

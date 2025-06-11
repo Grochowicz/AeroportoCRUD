@@ -49,7 +49,7 @@ const PeritoEm = () => {
   return (
     <div>
       {peritoEm ? (
-        <div className="edit-form">
+        <div className="edit-form container mt-3">
           <h4>Perito em</h4>
           <form>
             <div className="form-group">

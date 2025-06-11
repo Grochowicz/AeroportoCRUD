@@ -59,7 +59,7 @@ const Teste = () => {
   return (
     <div>
       {currentTeste ? (
-        <div className="edit-form">
+        <div className="edit-form container mt-3">
           <h4>Teste</h4>
           <form>
             <div className="form-group">

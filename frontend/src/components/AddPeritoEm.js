@@ -35,7 +35,7 @@ const AddPeritoEm = () => {
   };
 
   return (
-    <div className="submit-form">
+    <div className="submit-form container mt-3">
       {submitted ? (
         <div>
           <h4>Relacionamento cadastrado com sucesso!</h4>

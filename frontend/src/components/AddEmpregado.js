@@ -7,7 +7,8 @@ const AddEmpregado = () => {
     nome: "",
     endereco: "",
     telefone: "",
-    salario: ""
+    salario: "",
+    cargo: ""
   };
 
   const [empregado, setEmpregado] = useState(initialEmpregadoState);
@@ -19,29 +20,38 @@ const AddEmpregado = () => {
   };
 
   const saveEmpregado = () => {
-    const data = {
-      nome: empregado.nome,
-      endereco: empregado.endereco,
-      telefone: empregado.telefone,
-      salario: empregado.salario
-    };
-
-    EmpregadoDataService.create(data)
-      .then(response => {
-        setEmpregado({
-          id: response.data.id,
-          nome: response.data.nome,
-          endereco: response.data.endereco,
-          telefone: response.data.telefone,
-          salario: response.data.salario
-        });
-        setSubmitted(true);
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+  const data = {
+    nome: empregado.nome,
+    endereco: empregado.endereco,
+    telefone: empregado.telefone,
+    salario: empregado.salario
   };
+
+  EmpregadoDataService.create(data)
+    .then(response => {
+      const id = response.data.id;
+      setEmpregado({
+        id: response.data.id,
+        nome: response.data.nome,
+        endereco: response.data.endereco,
+        telefone: response.data.telefone,
+        salario: response.data.salario
+      });
+      setSubmitted(true);
+
+      //bomba
+      if (empregado.cargo === "controlador") {
+        EmpregadoDataService.createControlador({ empregadoId: id});
+      } else if (empregado.cargo === "tecnico") {
+        EmpregadoDataService.createTecnico({ empregadoId: id, salario_base: data.salario });
+      }
+
+      console.log(response.data);
+    })
+    .catch(e => {
+      console.log(e);
+    });
+};
 
   const newEmpregado = () => {
     setEmpregado(initialEmpregadoState);
@@ -49,7 +59,7 @@ const AddEmpregado = () => {
   };
 
   return (
-    <div className="submit-form">
+    <div className="submit-form container mt-3">
       {submitted ? (
         <div>
           <h4>Empregado adicionado com sucesso!</h4>
@@ -111,6 +121,23 @@ const AddEmpregado = () => {
               name="salario"
             />
           </div>
+
+          <div className="form-group">
+            <label htmlFor="tipo">Tipo de empregado</label>
+            <select
+              className="form-control"
+              id="cargo"
+              name="cargo"
+              value={empregado.cargo}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="">Selecione</option>
+              <option value="controlador">Controlador</option>
+              <option value="tecnico">Técnico</option>
+            </select>
+          </div>
+
 
           <button onClick={saveEmpregado} className="btn btn-success">
             Salvar 

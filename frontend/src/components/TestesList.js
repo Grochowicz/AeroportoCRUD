@@ -6,10 +6,16 @@ const TestesList = () => {
   const [testes, setTestes] = useState([]);
   const [currentTeste, setCurrentTeste] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
+  const [searchNumAnac, setSearchNumAnac] = useState("");
 
   useEffect(() => {
     retrieveTestes();
   }, []);
+
+  const onChangeSearchNumAnac = (e) => {
+  const searchValue = e.target.value;
+  setSearchNumAnac(searchValue);
+  };
 
   const retrieveTestes = () => {
     TesteDataService.getAll()
@@ -42,9 +48,41 @@ const TestesList = () => {
       });
   };
 
+  const findByNumAnac = () => {
+  TesteDataService.findByNumAnac(searchNumAnac)
+    .then(response => {
+      setTestes(response.data);
+      setCurrentTeste(null);
+      setCurrentIndex(-1);
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  };
+
+
   return (
-    <div className="list row">
+    <div className="list row container mt-3">
       <div className="col-md-6">
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Buscar por número ANAC"
+            value={searchNumAnac}
+            onChange={onChangeSearchNumAnac}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={findByNumAnac}
+            >
+              Buscar 
+            </button>
+          </div>
+        </div>
+
         <h4>Lista de Testes</h4>
 
         <ul className="list-group">
@@ -73,6 +111,7 @@ const TestesList = () => {
         {currentTeste ? (
           <div>
             <h4>Teste</h4>
+            <div><strong>ID:</strong> {currentTeste.id}</div>
             <div><strong>Número ANAC:</strong> {currentTeste.num_anac}</div>
             <div><strong>Data:</strong> {currentTeste.data}</div>
             <div><strong>Duração (horas):</strong> {currentTeste.duracao_horas}</div>
