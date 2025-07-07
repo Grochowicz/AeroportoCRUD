@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import TutorialDataService from "../services/ModeloService";
+import ModeloDataService from "../services/ModeloService";
 import { Link } from "react-router-dom";
 
 const ModelosList = () => {
@@ -18,7 +18,7 @@ const ModelosList = () => {
   };
 
   const retrieveModelos= () => {
-    TutorialDataService.getAll()
+    ModeloDataService.getAll()
       .then(response => {
         setModelos(response.data);
         console.log(response.data);
