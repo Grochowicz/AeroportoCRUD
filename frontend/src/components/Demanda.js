@@ -11,6 +11,7 @@ const Demanda = () => {
     inicio: 0,
     fim: 0, 
     valor: 0, 
+    nivel: 0, 
   };
   const [currentDemanda, setCurrentDemanda] = useState(initialDemandaState);
   const [message, setMessage] = useState("");
@@ -54,79 +55,66 @@ const Demanda = () => {
       });
   };
 
-  // to do: mostrar demanda
   return (
     <div>
-      {/* {currentDemanda ? (
+      {currentDemanda ? (
         <div className="edit-form container mt-3">
-          <h4>Teste</h4>
+          <h4>Demanda</h4>
           <form>
             <div className="form-group">
-              <label htmlFor="num_anac">Número ANAC</label>
-              <input
-                type="number"
-                className="form-control"
-                id="num_anac"
-                value={currentTeste.num_anac}
-                onChange={handleInputChange}
-                name="num_anac"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="data">Data</label>
+              <label htmlFor="inicio">Inicio</label>
               <input
                 type="date"
                 className="form-control"
-                id="data"
-                value={currentTeste.data}
+                id="inicio"
+                value={currentDemanda.inicio}
                 onChange={handleInputChange}
-                name="data"
+                name="inicio"
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="duracao_horas">Duração (horas)</label>
+              <label htmlFor="fim">Fim</label>
+              <input
+                type="date"
+                className="form-control"
+                id="fim"
+                value={currentDemanda.fim}
+                onChange={handleInputChange}
+                name="fim"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="valor">Valor</label>
               <input
                 type="number"
                 className="form-control"
-                id="duracao_horas"
-                value={currentTeste.duracao_horas}
+                id="valor"
+                value={currentDemanda.valor}
                 onChange={handleInputChange}
-                name="duracao_horas"
+                name="valor"
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="resultado">Resultado</label>
-              <input
-                type="text"
-                className="form-control"
-                id="resultado"
-                value={currentTeste.resultado}
-                onChange={handleInputChange}
-                name="resultado"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="aviaoId">ID do Avião</label>
+              <label htmlFor="nivel">Nivel</label>
               <input
                 type="number"
                 className="form-control"
-                id="aviaoId"
-                value={currentTeste.aviaoId}
+                id="nivel"
+                value={currentDemanda.nivel}
                 onChange={handleInputChange}
-                name="aviaoId"
+                name="nivel"
               />
             </div>
           </form>
 
-          <button className="btn btn-danger" onClick={deleteTeste}>
+          <button className="btn btn-danger" onClick={deleteDemanda}>
             Deletar
           </button>
 
-          <button className="btn btn-success" onClick={updateTeste}>
+          <button className="btn btn-success" onClick={updateDemanda}>
             Atualizar
           </button>
           <p>{message}</p>
@@ -134,9 +122,9 @@ const Demanda = () => {
       ) : (
         <div>
           <br />
-          <p>Clique em um teste</p>
+          <p>Clique em uma demanda</p>
         </div>
-      )} */}
+      )}
     </div>
   );
 };
