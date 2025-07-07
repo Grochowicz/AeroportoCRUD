@@ -8,10 +8,9 @@ const Demanda = () => {
 
   const initialDemandaState = {
     id: null,
-    tipo: 0, // 0 -> demanda de voo para fora (lugar = pra onde vai)
-             // 1 -> demanda de voo pra ca (lugar = de onde vem)
-    lugar: "",
-    nivel: 0, 
+    inicio: 0,
+    fim: 0, 
+    valor: 0, 
   };
   const [currentDemanda, setCurrentDemanda] = useState(initialDemandaState);
   const [message, setMessage] = useState("");
