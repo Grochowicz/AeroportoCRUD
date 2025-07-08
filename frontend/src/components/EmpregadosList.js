@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import EmpregadoDataService from "../services/EmpregadoService";
+import PeritoEmDataService from "../services/PeritoEmService";
 import { Link } from "react-router-dom";
 
 
@@ -8,6 +9,9 @@ const EmpregadosList = () => {
   const [currentEmpregado, setCurrentEmpregado] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [searchNome, setSearchNome] = useState("");
+  const [tecnicoInfo, setTecnicoInfo] = useState(null);
+  const [controladorInfo, setControladorInfo] = useState(null);
+  const [peritoEmList, setPeritoEmList] = useState([]);
 
   useEffect(() => {
     retrieveEmpregados();
@@ -38,6 +42,29 @@ const EmpregadosList = () => {
   const setActiveEmpregado = (empregado, index) => {
     setCurrentEmpregado(empregado);
     setCurrentIndex(index);
+    setTecnicoInfo(null);
+    setControladorInfo(null);
+    setPeritoEmList([]);
+    // Fetch tecnico info
+    EmpregadoDataService.getTecnicoByEmpregadoId(empregado.id)
+      .then(res => {
+        if (res.data && res.data.length > 0) {
+          setTecnicoInfo(res.data[0]);
+          // Fetch perito_em for this tecnico
+          PeritoEmDataService.getByTecnicoId(res.data[0].id)
+            .then(peritoRes => setPeritoEmList(peritoRes.data))
+            .catch(() => setPeritoEmList([]));
+        }
+      })
+      .catch(() => setTecnicoInfo(null));
+    // Fetch controlador info
+    EmpregadoDataService.getControladorByEmpregadoId(empregado.id)
+      .then(res => {
+        if (res.data && res.data.length > 0) {
+          setControladorInfo(res.data[0]);
+        }
+      })
+      .catch(() => setControladorInfo(null));
   };
 
   const removeAllEmpregados = () => {
@@ -143,6 +170,23 @@ const EmpregadosList = () => {
               </label>{" "}
               R$ {parseFloat(currentEmpregado.salario).toFixed(2)}
             </div>
+            {tecnicoInfo && (
+              <div>
+                <label><strong>Tipo:</strong></label> Técnico<br/>
+                <label><strong>Salário Base:</strong></label> R$ {parseFloat(tecnicoInfo.salario_base).toFixed(2)}<br/>
+                {peritoEmList.length > 0 && (
+                  <div>
+                    <label><strong>Modelos (Perito em):</strong></label> {peritoEmList.map(p => p.modeloId).join(", ")}
+                  </div>
+                )}
+              </div>
+            )}
+            {controladorInfo && (
+              <div>
+                <label><strong>Tipo:</strong></label> Controlador<br/>
+                <label><strong>Último Exame:</strong></label> {new Date(controladorInfo.ultimo_exame).toLocaleDateString()}
+              </div>
+            )}
 
             <Link to={"/empregados/" + currentEmpregado.id}>
               Editar

@@ -8,7 +8,7 @@ const PeritoEm = () => {
 
   const initialState = {
     id: null,
-    tecnico_perito: "",
+    tecnicoId: "",
     modeloId: ""
   };
 
@@ -35,7 +35,7 @@ const PeritoEm = () => {
   const updatePeritoEm = () => {
     PeritoEmDataService.update(peritoEm.id, peritoEm)
       .then(response => {
-        setMessage("Relacionamento atualizado com sucesso!");
+        setMessage("Atualizado com sucesso!");
       })
       .catch(e => console.log(e));
   };
@@ -53,14 +53,14 @@ const PeritoEm = () => {
           <h4>Perito em</h4>
           <form>
             <div className="form-group">
-              <label htmlFor="tecnico_perito">Técnico</label>
+              <label htmlFor="tecnicoId">Técnico</label>
               <input
                 type="text"
                 className="form-control"
-                id="tecnico_perito"
-                value={peritoEm.tecnico_perito}
+                id="tecnicoId"
+                value={peritoEm.tecnicoId}
                 onChange={handleInputChange}
-                name="tecnico_perito"
+                name="tecnicoId"
               />
             </div>
 
@@ -84,7 +84,7 @@ const PeritoEm = () => {
           <button className="btn btn-success" onClick={updatePeritoEm}>
             Atualizar
           </button>
-          <p>{message}</p>
+          <p>{message && "Atualizado com sucesso!"}</p>
         </div>
       ) : (
         <p>Clique em um(a) perito_em</p>

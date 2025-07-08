@@ -25,6 +25,10 @@ class PeritoEmDataService {
     return http.delete(`/perito_em`);
   }
 
+  getByTecnicoId(tecnicoId) {
+    return http.get(`/perito_em?tecnicoId=${tecnicoId}`);
+  }
+
   // findByTitle(title) {
     // return http.get(`/perito_em?nome=${title}`);
   // }

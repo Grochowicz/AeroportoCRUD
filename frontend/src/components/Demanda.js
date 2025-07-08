@@ -37,9 +37,9 @@ const Demanda = () => {
   };
 
   const updateDemanda= () => {
-    TesteDataService.update(currentDemanda.id, currentDemanda)
+    DemandaDataService.update(currentDemanda.id, currentDemanda)
       .then(response => {
-        setMessage("Teste atualizado com sucesso!");
+        setMessage("Atualizado com sucesso!");
       })
       .catch(e => {
         console.log(e);
@@ -118,7 +118,7 @@ const Demanda = () => {
           <button className="btn btn-success" onClick={updateDemanda}>
             Atualizar
           </button>
-          <p>{message}</p>
+          <p>{message && "Atualizado com sucesso!"}</p>
         </div>
       ) : (
         <div>

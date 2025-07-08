@@ -39,7 +39,7 @@ const Teste = () => {
   const updateTeste = () => {
     TesteDataService.update(currentTeste.id, currentTeste)
       .then(response => {
-        setMessage("Teste atualizado com sucesso!");
+        setMessage("Atualizado com sucesso!");
       })
       .catch(e => {
         console.log(e);
@@ -50,6 +50,7 @@ const Teste = () => {
     TesteDataService.delete(currentTeste.id)
       .then(response => {
         navigate("/testes");
+        setMessage("Deletado com sucesso!");
       })
       .catch(e => {
         console.log(e);
@@ -130,7 +131,7 @@ const Teste = () => {
           <button className="btn btn-success" onClick={updateTeste}>
             Atualizar
           </button>
-          <p>{message}</p>
+          <p>{message && "Atualizado com sucesso!"}</p>
         </div>
       ) : (
         <div>
