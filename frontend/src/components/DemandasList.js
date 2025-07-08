@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import DemandaDataService from "../services/DemandaService";
 import { Link } from "react-router-dom";
+import AviaoService from "../services/AviaoService";
+import { solve } from "./DemandaAlgo";
+import ModeloService from "../services/ModeloService";
 
 
 const DemandasList= () => {
@@ -8,9 +11,13 @@ const DemandasList= () => {
   const [currentDemanda, setCurrentDemanda] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [searchNome, setSearchNome] = useState("");
+  const [avioes, setAvioes] = useState([]);
+  const [modelos, setModelos] = useState([]);
 
   useEffect(() => {
     retrieveDemandas();
+    retrieveAvioes();
+    retrieveModelos();
   }, []);
 
   const onChangeSearchNome = e => {
@@ -23,6 +30,26 @@ const DemandasList= () => {
       .then(response => {
         setDemandas(response.data);
         console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const retrieveAvioes = () => {
+    AviaoService.getAll()
+      .then(response => {
+        setAvioes(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const retrieveModelos = () => {
+    ModeloService.getAll()
+      .then(response => {
+        setModelos(response.data);
       })
       .catch(e => {
         console.log(e);
@@ -62,6 +89,34 @@ const DemandasList= () => {
       });
   };
 
+  const handleAutoAssign = async () => {
+    if (!demandas.length || !avioes.length) return;
+    const avioesCompletos = avioes.map(aviao => {
+      const modelo = modelos.find(m => m.id === aviao.modeloId);
+      return {
+        ...aviao,
+        capacidade: modelo ? modelo.capacidade : 0,
+      };
+    });
+    const assignments = solve(demandas, avioesCompletos);
+    console.log(assignments);
+    for (let i = 0; i < assignments.length; i++) {
+      const aviaoIdx = assignments[i];
+      if (aviaoIdx !== -1) {
+        const demanda = demandas[i];
+        const aviao = avioesCompletos[aviaoIdx];
+        try {
+          await AviaoService.update(aviao.id, { ...aviao, demandaId: demanda.id });
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    }
+    retrieveAvioes();
+    retrieveDemandas();
+    alert("Atribuição automática concluída!");
+  };
+
   return (
     <div className="list row container mt-3">
       <div className="col-md-8">
@@ -86,6 +141,9 @@ const DemandasList= () => {
       </div>
       <div className="col-md-6">
         <h4>Lista de Demandas</h4>
+        <button className="btn btn-primary mb-2" onClick={handleAutoAssign}>
+          Auto-atribuir Aviões
+        </button>
 
         <ul className="list-group">
           {demandas &&
@@ -97,7 +155,7 @@ const DemandasList= () => {
                 onClick={() => setActiveDemanda(demanda, index)}
                 key={index}
               >
-                {demanda.nome}
+                {demanda.destino}
               </li>
             ))}
         </ul>
@@ -144,9 +202,10 @@ const DemandasList= () => {
               {currentDemanda.nivel}
             </div>
 
-            <Link to={"/demandas/" + currentDemanda.id}>
+            {/* TODO: Adicionar link para editar demanda ou não?*/}
+            {/* <Link to={"/demandas/" + currentDemanda.id}>
               Editar
-            </Link>
+            </Link> */}
           </div>
         ) : (
           <div>

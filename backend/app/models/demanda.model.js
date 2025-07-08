@@ -5,6 +5,7 @@ module.exports = (sequelize, Sequelize) =>{
 	// 	fim INTEGER,
 	// 	nivel INTEGER,
 	// 	destino: TEXT, 
+	// 	valor: INTEGER
 	// );
 	const Tabela = sequelize.define("demanda", {
         inicio: {
@@ -18,6 +19,9 @@ module.exports = (sequelize, Sequelize) =>{
         }, 
         destino: {
             type: Sequelize.TEXT
+        },
+        valor: {
+            type: Sequelize.INTEGER
         }
 	});
 

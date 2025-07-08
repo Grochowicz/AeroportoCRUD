@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import AviaoDataService from "../services/AviaoService";
 import { Link } from "react-router-dom";
+import ModeloService from "../services/ModeloService";
+import DemandaDataService from "../services/DemandaService";
 
 const AvioesList = () => {
   const [avioes, setAvioes] = useState([]);
   const [currentAviao, setCurrentAviao] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [searchId, setSearchId] = useState("");
+  const [modelos, setModelos] = useState([]);
+  const [demandas, setDemandas] = useState([]);
 
   useEffect(() => {
     retrieveAvioes();
+    retrieveModelos();
+    retrieveDemandas();
   }, []);
 
   const onChangeSearchId = e => {
@@ -26,6 +32,18 @@ const AvioesList = () => {
       .catch(e => {
         console.log(e);
       });
+  };
+
+  const retrieveModelos = () => {
+    ModeloService.getAll()
+      .then(response => setModelos(response.data))
+      .catch(e => console.log(e));
+  };
+
+  const retrieveDemandas = () => {
+    DemandaDataService.getAll()
+      .then(response => setDemandas(response.data))
+      .catch(e => console.log(e));
   };
 
   const refreshList = () => {
@@ -88,17 +106,20 @@ const AvioesList = () => {
 
         <ul className="list-group">
           {avioes &&
-            avioes.map((aviao, index) => (
-              <li
-                className={
-                  "list-group-item " + (index === currentIndex ? "active" : "")
-                }
-                onClick={() => setActiveAviao(aviao, index)}
-                key={index}
-              >
-                Avião #{aviao.id} (Modelo {aviao.modeloId})
-              </li>
-            ))}
+            avioes.map((aviao, index) => {
+              const modelo = modelos.find(m => m.id === aviao.modeloId);
+              return (
+                <li
+                  className={
+                    "list-group-item " + (index === currentIndex ? "active" : "")
+                  }
+                  onClick={() => setActiveAviao(aviao, index)}
+                  key={index}
+                >
+                  Avião #{aviao.id} (modelo "{modelo ? modelo.nome : aviao.modeloId}")
+                </li>
+              );
+            })}
         </ul>
 
         <button
@@ -120,11 +141,40 @@ const AvioesList = () => {
             </div>
             <div>
               <label>
-                <strong>Modelo ID:</strong>
+                <strong>Modelo:</strong>
               </label>{" "}
-              {currentAviao.modeloId}
+              {(() => {
+                const modelo = modelos.find(m => m.id === currentAviao.modeloId);
+                return modelo ? modelo.nome : currentAviao.modeloId;
+              })()}
             </div>
-
+            <div>
+              <label>
+                <strong>Demanda:</strong>
+              </label>{" "}
+              {(() => {
+                // Verifica se o avião está disponível agora
+                const now = new Date();
+                const minutosAgora = now.getHours() * 60 + now.getMinutes();
+                const demandasAviao = demandas.filter(d => d.aviaoId === currentAviao.id);
+                const ocupada = demandasAviao.some(d => d.inicio <= minutosAgora && d.fim >= minutosAgora);
+                return ocupada ? "Ocupado" : "Disponível";
+              })()}
+            </div>
+            <div>
+              <label>
+                <strong>Demandas deste avião:</strong>
+              </label>
+              <ul>
+                {demandas
+                  .filter(d => d.aviaoId === currentAviao.id)
+                  .map(d => (
+                    <li key={d.id}>
+                      {d.destino} ({d.inicio} - {d.fim})
+                    </li>
+                  ))}
+              </ul>
+            </div>
             <Link to={"/avioes/" + currentAviao.id}>
               Editar
             </Link>

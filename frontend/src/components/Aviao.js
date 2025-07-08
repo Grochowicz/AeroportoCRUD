@@ -8,7 +8,8 @@ const Aviao = () => {
 
   const initialAviaoState = {
     id: null,
-    modeloId: ""
+    modeloId: "", 
+    demandaId: ""
   };
   const [currentAviao, setCurrentAviao] = useState(initialAviaoState);
   const [message, setMessage] = useState("");
@@ -71,6 +72,17 @@ const Aviao = () => {
                 value={currentAviao.modeloId}
                 onChange={handleInputChange}
                 name="modeloId"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="demandaId">Id da Demanda</label>
+              <input
+                type="number"
+                className="form-control"
+                id="demandaId"
+                value={currentAviao.demandaId}
+                onChange={handleInputChange}
+                name="demandaId"
               />
             </div>
           </form>

@@ -59,8 +59,7 @@ db.perito_em.belongsTo(db.tecnicos, { foreignKey: "tecnicoId", as: "tecnico" });
 
 // demandas
 db.demandas = require("./demanda.model.js")(sequelize, Sequelize); 
-db.demandas.hasOne(db.avioes, { foreignKey: "demandaId", as: "aviao" }); 
-db.avioes.belongsTo(db.demandas, { foreignKey: "demandaId", as: "demanda" }); 
-
+db.avioes.hasMany(db.demandas, { foreignKey: "aviaoId", as: "demandas" });
+db.demandas.belongsTo(db.avioes, { foreignKey: "aviaoId", as: "aviao" });
 
 module.exports = db;

@@ -17,7 +17,8 @@ exports.create = (req, res) => {
     inicio: req.body.inicio,
     fim: req.body.fim,
     nivel: req.body.nivel,
-    destino: req.body.destino
+    destino: req.body.destino, 
+    valor: req.body.valor
   };
 
   // Salva no banco

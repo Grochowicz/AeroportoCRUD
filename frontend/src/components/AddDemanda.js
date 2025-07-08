@@ -7,7 +7,8 @@ const AddDemanda = () => {
     inicio: "",
     fim: "",
     nivel: "",
-    destino: ""
+    destino: "",
+    valor: ""
   };
   const [demanda, setDemanda] = useState(initialDemandaState);
   const [submitted, setSubmitted] = useState(false);
@@ -29,7 +30,9 @@ const AddDemanda = () => {
       inicio: timeToMinutes(demanda.inicio),
       fim: timeToMinutes(demanda.fim),
       nivel: demanda.nivel,
-      destino: demanda.destino
+      valor: demanda.valor, 
+      destino: demanda.destino,
+      valor: demanda.valor
     };
 
     DemandaDataService.create(data)
@@ -39,7 +42,8 @@ const AddDemanda = () => {
           inicio: response.data.inicio,
           fim: response.data.fim,
           nivel: response.data.nivel,
-          destino: response.data.destino
+          destino: response.data.destino,
+          valor: response.data.valor
         });
         setSubmitted(true);
         console.log(response.data);
@@ -111,6 +115,18 @@ const AddDemanda = () => {
               value={demanda.destino}
               onChange={handleInputChange}
               name="destino"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="valor">Valor (estimativa de lucro)</label>
+            <input
+              type="number"
+              className="form-control"
+              id="valor"
+              required
+              value={demanda.valor}
+              onChange={handleInputChange}
+              name="valor"
             />
           </div>
           <button onClick={saveDemanda} className="btn btn-success">
