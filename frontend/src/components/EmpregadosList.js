@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EmpregadoDataService from "../services/EmpregadoService";
 import PeritoEmDataService from "../services/PeritoEmService";
+import ModeloService from "../services/ModeloService";
 import { Link } from "react-router-dom";
 
 
@@ -12,9 +13,11 @@ const EmpregadosList = () => {
   const [tecnicoInfo, setTecnicoInfo] = useState(null);
   const [controladorInfo, setControladorInfo] = useState(null);
   const [peritoEmList, setPeritoEmList] = useState([]);
+  const [modelos, setModelos] = useState([]);
 
   useEffect(() => {
     retrieveEmpregados();
+    retrieveModelos();
   }, []);
 
   const onChangeSearchNome = e => {
@@ -31,6 +34,12 @@ const EmpregadosList = () => {
       .catch(e => {
         console.log(e);
       });
+  };
+
+  const retrieveModelos = () => {
+    ModeloService.getAll()
+      .then(response => setModelos(response.data))
+      .catch(e => console.log(e));
   };
 
   const refreshList = () => {
@@ -176,7 +185,15 @@ const EmpregadosList = () => {
                 <label><strong>Salário Base:</strong></label> R$ {parseFloat(tecnicoInfo.salario_base).toFixed(2)}<br/>
                 {peritoEmList.length > 0 && (
                   <div>
-                    <label><strong>Modelos (Perito em):</strong></label> {peritoEmList.map(p => p.modeloId).join(", ")}
+                    <label><strong>Modelos (Perito em):</strong></label>
+                    {peritoEmList
+                      .filter(p => p.tecnicoId === tecnicoInfo.id)
+                      .map(p => {
+                        const modelo = modelos.find(m => m.id === p.modeloId);
+                        return modelo ? modelo.nome : p.modeloId;
+                      })
+                      .join(", ")
+                    }
                   </div>
                 )}
               </div>

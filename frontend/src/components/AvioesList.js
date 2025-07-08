@@ -79,6 +79,12 @@ const AvioesList = () => {
       });
   };
 
+  const timeToMinutes = (hhmm) => {
+    if (!hhmm) return 0;
+    const [h, m] = hhmm.split(':').map(Number);
+    return h * 60 + m;
+  };
+
   return (
     <div className="list row container mt-3">
       <div className="col-md-8">
@@ -153,11 +159,12 @@ const AvioesList = () => {
                 <strong>Demanda:</strong>
               </label>{" "}
               {(() => {
-                // Verifica se o avião está disponível agora
                 const now = new Date();
                 const minutosAgora = now.getHours() * 60 + now.getMinutes();
                 const demandasAviao = demandas.filter(d => d.aviaoId === currentAviao.id);
-                const ocupada = demandasAviao.some(d => d.inicio <= minutosAgora && d.fim >= minutosAgora);
+                const ocupada = demandasAviao.some(d => 
+                  timeToMinutes(d.inicio) <= minutosAgora && timeToMinutes(d.fim) >= minutosAgora
+                );
                 return ocupada ? "Ocupado" : "Disponível";
               })()}
             </div>

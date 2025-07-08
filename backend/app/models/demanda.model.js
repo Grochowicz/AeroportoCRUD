@@ -9,10 +9,12 @@ module.exports = (sequelize, Sequelize) =>{
 	// );
 	const Tabela = sequelize.define("demanda", {
         inicio: {
-            type: Sequelize.INTEGER
+            type: Sequelize.STRING,
+            allowNull: false
         }, 
         fim: {
-            type: Sequelize.INTEGER
+            type: Sequelize.STRING,
+            allowNull: false
         }, 
         nivel: {
             type: Sequelize.INTEGER

@@ -5,9 +5,11 @@ async function seed() {
 
   // Modelos de Avião
   const modelos = await db.modelos.bulkCreate([
-    { nome: "Boeing 737", capacidade: 5, peso: 41000 },
-    { nome: "Airbus A320", capacidade: 4, peso: 42000 },
-    { nome: "Embraer 190", capacidade: 3, peso: 28000 }
+    { nome: "Boeing 737", capacidade: 5 },
+    { nome: "Airbus A320", capacidade: 4 },
+    { nome: "Embraer 190", capacidade: 3 },
+    { nome: "Cessna 208", capacidade: 2 },
+    { nome: "ATR 72", capacidade: 6 }
   ]);
 
   // Empregados
@@ -20,15 +22,27 @@ async function seed() {
   // Aviões
   const avioes = await db.avioes.bulkCreate([
     { modeloId: modelos[0].id },
+    { modeloId: modelos[0].id },
     { modeloId: modelos[1].id },
-    { modeloId: modelos[2].id }
+    { modeloId: modelos[1].id },
+    { modeloId: modelos[2].id },
+    { modeloId: modelos[2].id },
+    { modeloId: modelos[3].id },
+    { modeloId: modelos[4].id }
   ]);
 
   // Demandas
-  const demandas = await db.demandas.bulkCreate([
-    { inicio: 60, fim: 120, nivel: 3, destino: "São Paulo", valor: 1000 },
-    { inicio: 90, fim: 150, nivel: 2, destino: "Rio de Janeiro", valor: 800 },
-    { inicio: 130, fim: 200, nivel: 5, destino: "Brasília", valor: 1200 }
+  await db.demandas.bulkCreate([
+    { inicio: "13:00", fim: "14:00", nivel: 3, destino: "São Paulo", valor: 1000 },
+    { inicio: "13:30", fim: "14:30", nivel: 2, destino: "Rio de Janeiro", valor: 800 },
+    { inicio: "14:15", fim: "15:00", nivel: 5, destino: "Brasília", valor: 1200 },
+    { inicio: "15:00", fim: "16:00", nivel: 4, destino: "Curitiba", valor: 900 },
+    { inicio: "16:00", fim: "17:00", nivel: 6, destino: "Porto Alegre", valor: 1500 },
+    { inicio: "13:45", fim: "14:30", nivel: 2, destino: "Campinas", valor: 700 },
+    { inicio: "14:30", fim: "15:30", nivel: 3, destino: "Salvador", valor: 950 },
+    { inicio: "15:30", fim: "16:30", nivel: 5, destino: "Recife", valor: 1100 },
+    { inicio: "16:30", fim: "17:30", nivel: 4, destino: "Fortaleza", valor: 1050 },
+    { inicio: "17:00", fim: "18:00", nivel: 2, destino: "Manaus", valor: 850 }
   ]);
 
   // Técnicos (associados a empregados)
