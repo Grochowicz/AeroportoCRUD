@@ -58,7 +58,7 @@ function App() {
 
           <Route path="/demandas" element={<DemandasList/>} />
           <Route path="/addDemanda" element={<AddDemanda/>} />
-          <Route path="/perito_em/:id" element={<Demanda/>} />
+          <Route path="/demandas/:id" element={<Demanda/>} />
         </Routes>
     </div>
   );

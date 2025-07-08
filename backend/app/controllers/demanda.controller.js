@@ -75,7 +75,7 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   Tabela.update(req.body, {
-    where: { num_matricula: id }
+    where: { id: id }
   })
     .then(num => {
       if (num == 1) {

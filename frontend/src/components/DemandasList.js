@@ -106,7 +106,7 @@ const DemandasList= () => {
         const demanda = demandas[i];
         const aviao = avioesCompletos[aviaoIdx];
         try {
-          await AviaoService.update(aviao.id, { ...aviao, demandaId: demanda.id });
+          await DemandaDataService.update(demanda.id, { ...demanda, aviaoId: aviao.id });
         } catch (e) {
           console.log(e);
         }
@@ -202,10 +202,10 @@ const DemandasList= () => {
               {currentDemanda.nivel}
             </div>
 
-            {/* TODO: Adicionar link para editar demanda ou não?*/}
-            {/* <Link to={"/demandas/" + currentDemanda.id}>
+            {/* TODO: Adicionar link para editar demanda ou não? */}
+            <Link to={"/demandas/" + currentDemanda.id}>
               Editar
-            </Link> */}
+            </Link>
           </div>
         ) : (
           <div>
