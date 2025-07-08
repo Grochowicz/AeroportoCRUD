@@ -28,6 +28,7 @@ import PeritoEmList from "./components/PeritoEmList";
 
 import Demanda from "./components/Demanda";
 import DemandasList from "./components/DemandasList";
+import AddDemanda from "./components/AddDemanda";
 
 function App() {
   return (
@@ -56,7 +57,7 @@ function App() {
           <Route path="/perito_em/:id" element={<PeritoEm/>} />
 
           <Route path="/demandas" element={<DemandasList/>} />
-          <Route path="/addPerito_em" element={<AddDemanda/>} />
+          <Route path="/addDemanda" element={<AddDemanda/>} />
           <Route path="/perito_em/:id" element={<Demanda/>} />
         </Routes>
     </div>

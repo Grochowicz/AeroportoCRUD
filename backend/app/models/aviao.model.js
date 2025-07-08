@@ -5,6 +5,10 @@ module.exports = (sequelize, Sequelize) =>{
 	// 	FOREIGN KEY (modelo) REFERENCES Modelo_de_aviao(cod_modelo)
 	// );
 	const Tabela = sequelize.define("aviao", {
+		demandaId: {
+			type: Sequelize.INTEGER,
+			allowNull: true // Optional foreign key
+		}
 	});
 
 	return Tabela;

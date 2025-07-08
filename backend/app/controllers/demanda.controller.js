@@ -1,5 +1,5 @@
 const db = require("../models");
-const Tabela = db.demanda; // nome exportado no model
+const Tabela = db.demandas; // nome exportado no model
 const Op = db.Sequelize.Op;
 
 // Cria uma nova demanda

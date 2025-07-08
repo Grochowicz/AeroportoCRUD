@@ -36,7 +36,7 @@ const DemandasList= () => {
   };
 
   const setActiveDemanda = (demanda, index) => {
-    setCurrentDemanda(empregado);
+    setCurrentDemanda(demanda);
     setCurrentIndex(index);
   };
 
@@ -54,7 +54,7 @@ const DemandasList= () => {
   const findByNome = () => {
     DemandaDataService.findByNome(searchNome)
       .then(response => {
-        setEmpregados(response.data);
+        setDemandas(response.data);
         console.log(response.data);
       })
       .catch(e => {

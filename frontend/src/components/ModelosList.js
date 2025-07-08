@@ -40,7 +40,7 @@ const ModelosList = () => {
   };
 
   const removeAllModelos = () => {
-    TutorialDataService.deleteAll()
+    ModeloDataService.deleteAll()
       .then(response => {
         console.log(response.data);
         refreshList();
@@ -51,7 +51,7 @@ const ModelosList = () => {
   };
 
   const findByTitle = () => {
-    TutorialDataService.findByTitle(searchTitle)
+    ModeloDataService.findByTitle(searchTitle)
       .then(response => {
         setModelos(response.data);
         console.log(response.data);

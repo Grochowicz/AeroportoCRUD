@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import AviaoDataService from "../services/AviaoService";
-import DemandaDataService from "../services/DemandaService"
+import DemandaDataService from "../services/DemandaService";
 
-// tem que fazer
-const AddDemanda= () => {
+const AddDemanda = () => {
   const initialDemandaState = {
     id: null,
-    modeloId: ""
+    inicio: "",
+    fim: "",
+    nivel: "",
+    destino: ""
   };
   const [demanda, setDemanda] = useState(initialDemandaState);
   const [submitted, setSubmitted] = useState(false);
@@ -16,16 +17,29 @@ const AddDemanda= () => {
     setDemanda({ ...demanda, [name]: value });
   };
 
+  // Helper to convert HH:MM to minutes
+  const timeToMinutes = (hhmm) => {
+    if (!hhmm) return 0;
+    const [hours, minutes] = hhmm.split(":").map(Number);
+    return hours * 60 + minutes;
+  };
+
   const saveDemanda = () => {
     const data = {
-      modeloId: aviao.modeloId
+      inicio: timeToMinutes(demanda.inicio),
+      fim: timeToMinutes(demanda.fim),
+      nivel: demanda.nivel,
+      destino: demanda.destino
     };
 
-    AviaoDataService.create(data)
+    DemandaDataService.create(data)
       .then(response => {
-        setAviao({
+        setDemanda({
           id: response.data.id,
-          modeloId: response.data.modeloId
+          inicio: response.data.inicio,
+          fim: response.data.fim,
+          nivel: response.data.nivel,
+          destino: response.data.destino
         });
         setSubmitted(true);
         console.log(response.data);
@@ -35,8 +49,8 @@ const AddDemanda= () => {
       });
   };
 
-  const newAviao = () => {
-    setAviao(initialAviaoState);
+  const newDemanda = () => {
+    setDemanda(initialDemandaState);
     setSubmitted(false);
   };
 
@@ -44,27 +58,62 @@ const AddDemanda= () => {
     <div className="submit-form container mt-3">
       {submitted ? (
         <div>
-          <h4>Você adicionou o avião com sucesso!</h4>
-          <button className="btn btn-success" onClick={newAviao}>
-            Adicionar outro
+          <h4>Você adicionou a demanda com sucesso!</h4>
+          <button className="btn btn-success" onClick={newDemanda}>
+            Adicionar outra
           </button>
         </div>
       ) : (
         <div>
           <div className="form-group">
-            <label htmlFor="modeloId">Modelo ID</label>
+            <label htmlFor="inicio">Início (horas:minutos)</label>
+            <input
+              type="time"
+              className="form-control"
+              id="inicio"
+              required
+              value={demanda.inicio}
+              onChange={handleInputChange}
+              name="inicio"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="fim">Fim (horas:minutos)</label>
+            <input
+              type="time"
+              className="form-control"
+              id="fim"
+              required
+              value={demanda.fim}
+              onChange={handleInputChange}
+              name="fim"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="nivel">Nível</label>
             <input
               type="number"
               className="form-control"
-              id="modeloId"
+              id="nivel"
               required
-              value={aviao.modeloId}
+              value={demanda.nivel}
               onChange={handleInputChange}
-              name="modeloId"
+              name="nivel"
             />
           </div>
-
-          <button onClick={saveAviao} className="btn btn-success">
+          <div className="form-group">
+            <label htmlFor="destino">Destino</label>
+            <input
+              type="text"
+              className="form-control"
+              id="destino"
+              required
+              value={demanda.destino}
+              onChange={handleInputChange}
+              name="destino"
+            />
+          </div>
+          <button onClick={saveDemanda} className="btn btn-success">
             Salvar
           </button>
         </div>
@@ -73,4 +122,4 @@ const AddDemanda= () => {
   );
 };
 
-export default AddDemanda
+export default AddDemanda;
