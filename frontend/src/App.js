@@ -26,6 +26,9 @@ import AddPeritoEm from "./components/AddPeritoEm";
 import PeritoEm from "./components/PeritoEm";
 import PeritoEmList from "./components/PeritoEmList";
 
+import Demanda from "./components/Demanda";
+import DemandasList from "./components/DemandasList";
+
 function App() {
   return (
     <div>
@@ -51,6 +54,10 @@ function App() {
           <Route path="/perito_em" element={<PeritoEmList/>} />
           <Route path="/addPerito_em" element={<AddPeritoEm/>} />
           <Route path="/perito_em/:id" element={<PeritoEm/>} />
+
+          <Route path="/demandas" element={<DemandasList/>} />
+          <Route path="/addPerito_em" element={<AddDemanda/>} />
+          <Route path="/perito_em/:id" element={<Demanda/>} />
         </Routes>
     </div>
   );

@@ -34,6 +34,11 @@ const NavBar = () => {
                 Perito em
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={"/demandas"} className="nav-link">
+                Demandas
+              </Link>
+            </li>
           </div>
         </nav>
     </div>

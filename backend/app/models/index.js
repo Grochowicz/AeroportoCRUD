@@ -40,21 +40,27 @@ db.avioes.belongsTo(db.modelos, {
   as: "modelo"
 });
 
-db.testes = require("./teste.model.js")(sequelize, Sequelize);
 //testes
+db.testes = require("./teste.model.js")(sequelize, Sequelize);
 db.avioes.hasMany(db.testes,  { foreignKey: "aviaoId",   as: "testes" });
 db.testes.belongsTo(db.avioes, { foreignKey: "aviaoId",   as: "aviao"  });
 
 db.tecnicos.hasMany(db.testes,  { foreignKey: "tecnicoId", as: "testes" });
 db.testes.belongsTo(db.tecnicos, { foreignKey: "tecnicoId", as: "tecnico" });
 
-db.perito_em = require("./perito_em.model.js")(sequelize, Sequelize);
-
 //perito em
+db.perito_em = require("./perito_em.model.js")(sequelize, Sequelize);
 db.modelos.hasMany(db.perito_em,  { foreignKey: "modeloId",   as: "peritos" });
 db.perito_em.belongsTo(db.modelos, { foreignKey: "modeloId",   as: "modelo"  });
 
 db.tecnicos.hasMany(db.perito_em,  { foreignKey: "tecnicoId", as: "perícias" });
 db.perito_em.belongsTo(db.tecnicos, { foreignKey: "tecnicoId", as: "tecnico" });
+
+
+// demandas
+db.demandas = require("./demanda.model.js")(sequelize, Sequelize); 
+db.demandas.hasOne(db.avioes, { foreignKey: "demandaId", as: "aviao" }); 
+db.avioes.belongsTo(db.demandas, { foreignKey: "demandasId", as: "demanda" }); 
+
 
 module.exports = db;
