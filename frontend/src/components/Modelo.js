@@ -40,7 +40,7 @@ const Modelo = props => {
     ModeloDataService.update(currentModelo.id, currentModelo)
       .then(response => {
         console.log(response.data);
-        setMessage("Modelo editado com sucesso!");
+        setMessage("Atualizado com sucesso!");
       })
       .catch(e => {
         console.log(e);
@@ -104,18 +104,18 @@ const Modelo = props => {
               </div>
             </form>
 
-          <button className="button" onClick={deleteModelo}>
+          <button className="btn btn-danger" onClick={deleteModelo}>
             Deletar
           </button>
 
           <button
             type="submit"
-            className="button"
+            className="btn btn-success"
             onClick={updateModelo}
           >
             Atualizar
           </button>
-          <p>{message}</p>
+          <p>{message && "Atualizado com sucesso!"}</p>
         </div>
       ) : (
         <div>

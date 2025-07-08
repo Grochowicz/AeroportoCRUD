@@ -36,6 +36,14 @@ class EmpregadoDataService {
   findByNome(nome) {
     return http.get(`/empregados?nome=${nome}`);
   }
+
+  getTecnicoByEmpregadoId(empregadoId) {
+    return http.get(`/tecnicos?empregadoId=${empregadoId}`);
+  }
+
+  getControladorByEmpregadoId(empregadoId) {
+    return http.get(`/controladores?empregadoId=${empregadoId}`);
+  }
 }
 
 export default new EmpregadoDataService();

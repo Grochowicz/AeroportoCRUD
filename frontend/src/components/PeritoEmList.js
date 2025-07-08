@@ -48,7 +48,7 @@ const PeritoEmList = () => {
                 onClick={() => setActive(item, index)}
                 key={index}
               >
-                Técnico: {item.tecnico_perito} | Modelo: {item.modeloId}
+                Técnico: {item.tecnicoId} | Modelo: {item.modeloId}
               </li>
             ))}
         </ul>
@@ -65,7 +65,7 @@ const PeritoEmList = () => {
           <div>
             <h4>Detalhes</h4>
             <div>
-              <strong>Técnico:</strong> {current.tecnico_perito}
+              <strong>Técnico:</strong> {current.tecnicoId}
             </div>
             <div>
               <strong>Modelo:</strong> {current.modeloId}

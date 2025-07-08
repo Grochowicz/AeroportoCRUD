@@ -148,7 +148,7 @@ const Demanda = () => {
           <button className="btn btn-success ml-2" onClick={updateDemanda}>
             Atualizar
           </button>
-          <p>{message}</p>
+          <p>{message && "Atualizado com sucesso!"}</p>
         </div>
       ) : (
         <div>

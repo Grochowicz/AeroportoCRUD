@@ -39,7 +39,7 @@ const Empregado = () => {
   const updateEmpregado = () => {
     EmpregadoDataService.update(currentEmpregado.id, currentEmpregado)
       .then(response => {
-        setMessage("Empregado editado com sucesso!");
+        setMessage("Atualizado com sucesso!");
       })
       .catch(e => {
         console.log(e);
@@ -116,18 +116,18 @@ const Empregado = () => {
             </div>
           </form>
 
-          <button className="button" onClick={deleteEmpregado}>
+          <button className="btn btn-danger" onClick={deleteEmpregado}>
             Deletar
           </button>
 
           <button
             type="submit"
-            className="button"
+            className="btn btn-success"
             onClick={updateEmpregado}
           >
             Atualizar
           </button>
-          <p>{message}</p>
+          <p>{message && "Atualizado com sucesso!"}</p>
         </div>
       ) : (
         <div>
