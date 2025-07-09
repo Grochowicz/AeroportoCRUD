@@ -30,12 +30,12 @@ exports.create = (req, res) => {
     });
 };
 
-// Select todos
+// Select todos com filtros opcionais
 exports.findAll = (req, res) => {
-  // const empregadoId = req.query.empregadoId;
-  // var condition = nome ? { nome: { [Op.iLike]: `%${nome}%` } } : null;
+  const empregadoId = req.query.empregadoId;
+  var condition = empregadoId ? { empregadoId: empregadoId } : null;
 
-  Tabela.findAll({ where: null })
+  Tabela.findAll({ where: condition })
     .then(data => {
       res.send(data);
     })

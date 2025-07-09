@@ -30,10 +30,20 @@ exports.create = (req, res) => {
     });
 };
 
-// Select todos por num_anac
+// Select todos com filtros opcionais
 exports.findAll = (req, res) => {
-  const nome = req.query.num_anac;
-  var condition = nome ? { nome: { [Op.iLike]: `%${nome}%` } } : null;
+  const tecnicoId = req.query.tecnicoId;
+  const modeloId = req.query.modeloId;
+  
+  var condition = {};
+  
+  if (tecnicoId) {
+    condition.tecnicoId = tecnicoId;
+  }
+  
+  if (modeloId) {
+    condition.modeloId = modeloId;
+  }
 
   Tabela.findAll({ where: condition })
     .then(data => {

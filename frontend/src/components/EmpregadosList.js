@@ -60,7 +60,7 @@ const EmpregadosList = () => {
         if (res.data && res.data.length > 0) {
           setTecnicoInfo(res.data[0]);
           // Fetch perito_em for this tecnico
-          PeritoEmDataService.getByTecnicoId(res.data[0].id)
+          PeritoEmDataService.getByTecnicoId(empregado.id)
             .then(peritoRes => setPeritoEmList(peritoRes.data))
             .catch(() => setPeritoEmList([]));
         }
