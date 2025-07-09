@@ -141,12 +141,6 @@ const AvioesList = () => {
             <h4>Detalhes</h4>
             <div>
               <label>
-                <strong>ID:</strong>
-              </label>{" "}
-              {currentAviao.id}
-            </div>
-            <div>
-              <label>
                 <strong>Modelo:</strong>
               </label>{" "}
               {(() => {

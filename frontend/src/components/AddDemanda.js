@@ -27,8 +27,8 @@ const AddDemanda = () => {
 
   const saveDemanda = () => {
     const data = {
-      inicio: timeToMinutes(demanda.inicio),
-      fim: timeToMinutes(demanda.fim),
+      inicio: demanda.inicio,
+      fim: demanda.fim,
       nivel: demanda.nivel,
       valor: demanda.valor, 
       destino: demanda.destino,

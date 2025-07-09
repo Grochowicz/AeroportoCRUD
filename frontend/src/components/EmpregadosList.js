@@ -151,12 +151,6 @@ const EmpregadosList = () => {
             <h4>Empregado</h4>
             <div>
               <label>
-                <strong>ID:</strong>
-              </label>{" "}
-              {currentEmpregado.id}
-            </div>
-            <div>
-              <label>
                 <strong>Nome:</strong>
               </label>{" "}
               {currentEmpregado.nome}

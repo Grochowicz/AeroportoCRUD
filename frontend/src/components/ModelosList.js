@@ -114,28 +114,22 @@ const ModelosList = () => {
             <h4>Modelo</h4>
             <div>
               <label>
-                <strong>ID:</strong>
-              </label>{" "}
-              {currentModelo.id}
-            </div>
-            <div>
-              <label>
                 <strong>Nome:</strong>
               </label>{" "}
               {currentModelo.nome}
             </div>
             <div>
               <label>
-                <strong>Capacidade:</strong>
+                <strong>Nível de Capacidade:</strong>
               </label>{" "}
               {currentModelo.capacidade}
             </div>
-            <div>
+            {/* <div>
               <label>
                 <strong>Peso:</strong>
               </label>{" "}
               {currentModelo.peso}
-            </div>
+            </div> */}
 
             <Link
               to={"/modelos/" + currentModelo.id}

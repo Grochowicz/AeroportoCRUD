@@ -39,6 +39,11 @@ const NavBar = () => {
                 Demandas
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={"/flight-map"} className="nav-link">
+                Flight Map
+              </Link>
+            </li>
           </div>
         </nav>
     </div>

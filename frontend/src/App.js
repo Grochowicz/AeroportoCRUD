@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css';
 
@@ -30,6 +30,8 @@ import Demanda from "./components/Demanda";
 import DemandasList from "./components/DemandasList";
 import AddDemanda from "./components/AddDemanda";
 
+import FlightMap from "./components/FlightMap";
+
 function App() {
   return (
     <div>
@@ -59,6 +61,8 @@ function App() {
           <Route path="/demandas" element={<DemandasList/>} />
           <Route path="/addDemanda" element={<AddDemanda/>} />
           <Route path="/demandas/:id" element={<Demanda/>} />
+
+          <Route path="/flight-map" element={<FlightMap />} />
         </Routes>
     </div>
   );

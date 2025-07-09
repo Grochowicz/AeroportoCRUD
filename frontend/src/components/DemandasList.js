@@ -13,12 +13,26 @@ const DemandasList= () => {
   const [searchNome, setSearchNome] = useState("");
   const [avioes, setAvioes] = useState([]);
   const [modelos, setModelos] = useState([]);
+  const [groupedDemandas, setGroupedDemandas] = useState({});
+  const [expandedGroups, setExpandedGroups] = useState({});
 
   useEffect(() => {
     retrieveDemandas();
     retrieveAvioes();
     retrieveModelos();
   }, []);
+
+  useEffect(() => {
+    // Agrupar demandas por destino
+    const grouped = demandas.reduce((acc, demanda) => {
+      if (!acc[demanda.destino]) {
+        acc[demanda.destino] = [];
+      }
+      acc[demanda.destino].push(demanda);
+      return acc;
+    }, {});
+    setGroupedDemandas(grouped);
+  }, [demandas]);
 
   const onChangeSearchNome = e => {
     const searchNome = e.target.value;
@@ -79,7 +93,7 @@ const DemandasList= () => {
   };
 
   const findByNome = () => {
-    DemandaDataService.findByNome(searchNome)
+    DemandaDataService.findByDestino(searchNome)
       .then(response => {
         setDemandas(response.data);
         console.log(response.data);
@@ -124,7 +138,7 @@ const DemandasList= () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Buscar por nome"
+            placeholder="Buscar por destino"
             value={searchNome}
             onChange={onChangeSearchNome}
           />
@@ -145,20 +159,47 @@ const DemandasList= () => {
           Auto-atribuir Aviões
         </button>
 
-        <ul className="list-group">
-          {demandas &&
-            demandas.map((demanda, index) => (
-              <li
-                className={
-                  "list-group-item " + (index === currentIndex ? "active" : "")
-                }
-                onClick={() => setActiveDemanda(demanda, index)}
-                key={index}
-              >
-                {demanda.destino}
-              </li>
-            ))}
-        </ul>
+        {Object.entries(groupedDemandas).map(([destino, demandasDestino]) => (
+          <div key={destino} className="card mb-2">
+            <div 
+              className="card-header" 
+              onClick={() => setExpandedGroups(prev => ({
+                ...prev, 
+                [destino]: !prev[destino]
+              }))}
+              style={{ cursor: 'pointer', backgroundColor: '#f8f9fa' }}
+            >
+              <strong>{destino}</strong> ({demandasDestino.length} demandas)
+              <span className="float-right">
+                {expandedGroups[destino] ? '▼' : '▶'}
+              </span>
+            </div>
+            {expandedGroups[destino] && (
+              <div className="card-body p-0">
+                <ul className="list-group list-group-flush">
+                  {demandasDestino.map((demanda, index) => (
+                    <li
+                      key={demanda.id}
+                      className={`list-group-item ${demanda.id === currentDemanda?.id ? "active" : ""}`}
+                      onClick={() => setActiveDemanda(demanda, index)}
+                      style={{ 
+                        cursor: 'pointer',
+                        backgroundColor: demanda.aviaoId 
+                          ? 'rgba(40, 167, 69, 0.2)' // Verde com baixa opacidade para demandas atendidas
+                          : 'rgba(220, 53, 69, 0.2)' // Vermelho com baixa opacidade para demandas não atendidas
+                      }}
+                    >
+                      {demanda.inicio} - {demanda.fim} (Nível: {demanda.nivel}, Valor: R$ {demanda.valor})
+                      {demanda.aviaoId && (
+                        <span className="badge badge-success ml-2">Atendida</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        ))}
 
         <button
           className="m-3 btn btn-sm btn-danger"
@@ -171,12 +212,6 @@ const DemandasList= () => {
         {currentDemanda ? (
           <div>
             <h4>Demanda</h4>
-            <div>
-              <label>
-                <strong>ID:</strong>
-              </label>{" "}
-              {currentDemanda.id}
-            </div>
             <div>
               <label>
                 <strong>Inicio:</strong>
@@ -203,9 +238,9 @@ const DemandasList= () => {
             </div>
 
             {/* TODO: Adicionar link para editar demanda ou não? */}
-            <Link to={"/demandas/" + currentDemanda.id}>
+            {/* <Link to={"/demandas/" + currentDemanda.id}>
               Editar
-            </Link>
+            </Link> */}
           </div>
         ) : (
           <div>
